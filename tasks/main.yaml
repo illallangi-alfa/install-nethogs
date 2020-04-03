@@ -1,17 +1,7 @@
 ---
-- name: "Fail if OS/Architecture is not supported"
-  fail:
-    msg: "Installing nethogs on {{ (ansible_os_family | lower) + '_' + (ansible_architecture | lower) }} is unsupported."
-  when:
-    - "(install_nethogs_packages | default({}))[(ansible_os_family | lower) + '_' + (ansible_architecture | lower)] is not defined"
-    - "nethogs is defined"
-  tags:
-    - "nethogs"
 - name: "Install nethogs"
   package:
     pkg: "{{ install_nethogs_packages[(ansible_os_family | lower) + '_' + (ansible_architecture | lower)] }}"
     state: "present"
-  when:
-    - "nethogs is defined"
   tags:
     - "nethogs"
